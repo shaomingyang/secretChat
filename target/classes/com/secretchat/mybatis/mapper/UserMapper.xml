@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 不写会报错 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shangwei.bustx.mybatis.mapper.UserMapper">
+	<resultMap id="userBean" type="UserBean">
+		<id property="userID" column="UserID" javaType="java.lang.Integer"></id>
+		<result property="userName" column="UserName" javaType="java.lang.String"></result>
+		<result property="password" column="Password" javaType="java.lang.String"></result>
+		<result property="trueName" column="TrueName" javaType="java.lang.String"></result>
+		<result property="status" column="Status" javaType="java.lang.Integer"></result>
+		<result property="lastLoginTime" column="LastLoginTime" javaType="java.lang.String"></result>
+		<result property="lastLoginIP" column="LastLoginIP" javaType="java.lang.String"></result>
+	</resultMap>
+	<select id="findByUserName" resultMap="userBean">
+		SELECT UserID,UserName,Password,TrueName,Status,LastLoginTime,LastLoginIP FROM bs_users WHERE usertype=4 and isdelete=0 and status=0 and userName=#{userName}
+	</select>
+	
+	<update id="updateUserByName">
+		update bs_users set LastLoginTime = #{lastLoginTime},LastLoginIp=#{lastLoginIP},IDCard=#{iDCard} where usertype=4 and isdelete=0 and status=0 and userName=#{userName}
+	</update>
+</mapper>

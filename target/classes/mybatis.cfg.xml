@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 引入外部配置文件 -->
+	<properties resource="mysql.properties"></properties>
+
+	<!-- 为JAVA Bean起类别名 -->
+	<typeAliases>
+		<!-- 别名方式1，一个一个的配置 type中放置的是类的全路径，alias中放置的是类别名 <typeAliase type="com.cy.mybatis.beans.UserBean" 
+			alias="UserBean"/> -->
+		<!-- 别名方式2，自动扫描，将JAVA类的类名作为类的类别名 -->
+		<package name="com.shangwei.bustx.mybatis.beans" />
+	</typeAliases>
+	<!-- 配置mybatis运行环境 -->
+	<environments default="cybatis">
+		<environment id="cybatis">
+			<!-- type="JDBC" 代表使用JDBC的提交和回滚来管理事务 -->
+			<transactionManager type="JDBC" />
+
+			<!-- mybatis提供了3种数据源类型，分别是：POOLED,UNPOOLED,JNDI -->
+			<!-- POOLED 表示支持JDBC数据源连接池 -->
+			<!-- UNPOOLED 表示不支持数据源连接池 -->
+			<!-- JNDI 表示支持外部数据源连接池 -->
+			<dataSource type="com.shangwei.bustx.tools.druid.DruidDataSourceFactory">
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+				<property name="driverClassName" value="${driverClassName}" />
+				<property name="filters" value="${filters}" />
+
+				<property name="maxActive" value="${maxActive}" />
+				<property name="initialSize" value="${initialSize}" />
+				<property name="maxWait" value="${maxWait}" />
+				<property name="minIdle" value="${minIdle}" />
+
+				<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+				<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+
+				<property name="validationQuery" value="${validationQuery}" />
+				<property name="testWhileIdle" value="${testWhileIdle}" />
+				<property name="testOnBorrow" value="${testOnBorrow}" />
+				<property name="testOnReturn" value="${testOnReturn}" />
+				<property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}" />
+				<property name="removeAbandoned" value="${removeAbandoned}" /> <!-- 打开removeAbandoned功能 -->
+				<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" /> <!-- 1800秒，也就是30分钟 -->
+				<property name="logAbandoned" value="${logAbandoned}" /> <!-- 关闭abanded连接时输出错误日志 -->
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<!-- 告知映射文件方式1，一个一个的配置 <mapper resource="com/cy/mybatis/mapper/UserMapper.xml"/> -->
+		<!-- 告知映射文件方式2，自动扫描包内的Mapper接口与配置文件 -->
+		<package name="com/shangwei/bustx/mybatis/mapper"/>
+	</mappers>
+
+</configuration>
